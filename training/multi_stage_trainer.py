@@ -83,6 +83,7 @@ class MultiStageTrainer(object):
         # create source and target environment
         self._source_env = make_env(config.source_env, config, "source")
         self._target_env = make_env(config.target_env, config, "target")
+        print("skip frames", self._source_env.frame_skip, self._target_env.frame_skip)
         source_ob_space = self._source_env.observation_space
         source_env_ob_space = self._source_env.env_observation_space
         target_ob_space = target_env_ob_space = self._target_env.observation_space

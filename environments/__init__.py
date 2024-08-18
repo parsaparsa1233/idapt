@@ -91,6 +91,26 @@ register(
     entry_point="environments.gym_env:GymHalfCheetahDM",
     max_episode_steps=1000,
 )
+register(
+    id="GymHalfCheetahDM-v1",
+    entry_point="environments.gym_env:GymHalfCheetahDM1",
+    max_episode_steps=1000,
+)
+register(
+    id="GymHalfCheetahDM-v2",
+    entry_point="environments.gym_env:GymHalfCheetahDM2",
+    max_episode_steps=1000,
+)
+register(
+    id="GymHalfCheetahDM-v3",
+    entry_point="environments.gym_env:GymHalfCheetahDM3",
+    max_episode_steps=1000,
+)
+register(
+    id="GymHalfCheetahDM-v4",
+    entry_point="environments.gym_env:GymHalfCheetahDM4",
+    max_episode_steps=1000,
+)
 
 register(
     id="GymHalfCheetahDMVisual-v0",
