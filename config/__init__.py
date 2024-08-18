@@ -113,7 +113,7 @@ def add_method_arguments(parser):
     parser.add_argument(
         "--wandb",
         type=str2bool,
-        default=False,
+        default=True,
         help="set it True if you want to use wandb",
     )
     parser.add_argument("--wandb_entity", type=str)

@@ -39,6 +39,21 @@ class GymWalkerDM(Walker2dEnv):
         mujoco_env.MujocoEnv.__init__(self, model_path, 4)
         utils.EzPickle.__init__(self)
 
+class GymWalkerDM1(Walker2dEnv):
+    def __init__(self):
+        model_path = os.path.join(os.path.dirname(__file__), "assets/walker2d_dm.xml")
+        mujoco_env.MujocoEnv.__init__(self, model_path, 1)
+        utils.EzPickle.__init__(self)
+class GymWalkerDM2(Walker2dEnv):
+    def __init__(self):
+        model_path = os.path.join(os.path.dirname(__file__), "assets/walker2d_dm.xml")
+        mujoco_env.MujocoEnv.__init__(self, model_path, 2)
+        utils.EzPickle.__init__(self)
+class GymWalkerDM3(Walker2dEnv):
+    def __init__(self):
+        model_path = os.path.join(os.path.dirname(__file__), "assets/walker2d_dm.xml")
+        mujoco_env.MujocoEnv.__init__(self, model_path, 3)
+        utils.EzPickle.__init__(self)
 
 class GymWalkerDMVisual(Walker2dEnv):
     def __init__(self):

@@ -13,6 +13,9 @@ from environments.gym_env.inverted_pendulum_envs import (
 from environments.gym_env.walker_envs import (
     GymWalker,
     GymWalkerDM,
+    GymWalkerDM1,
+    GymWalkerDM2,
+    GymWalkerDM3,
     GymWalkerBackwards,
     GymWalkerEasy,
     GymWalkerDMVisual,

@@ -59,11 +59,13 @@ def run(config):
     torch.cuda.manual_seed_all(config.seed)
 
     if config.gpu is not None:
-        os.environ["CUDA_VISIBLE_DEVICES"] = "{}".format(config.gpu)
+        # os.environ["CUDA_VISIBLE_DEVICES"] = "{}".format(config.gpu)
         assert torch.cuda.is_available()
         config.device = torch.device("cuda")
     else:
         config.device = torch.device("cpu")
+
+    print("/////////////////////////// using ", config.device)
 
     # build a trainer
     trainer = MultiStageTrainer(config)

@@ -88,6 +88,7 @@ class GymWrapper(gym.Wrapper):
             self.observation_space = env.observation_space
 
         self.env_observation_space = env.observation_space
+        print("Frame Skip: ", self._frame_skip)
 
     def reset(self):
         ob = self.env.reset()

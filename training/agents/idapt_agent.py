@@ -76,16 +76,19 @@ class IDAPTAgent(BaseMultiStageAgent):
 
         ### Initializing Observaation Transformation Model ###
         if "visual" in config.mode:
-            self._encoder = GOTAgent(
-                config,
-                source_ob_space,
-                source_ac_space,
-                target_ob_space,
-                source_env_ob_space,
-            )
-            self.translate = self._encoder._translate
-            self.record_video = self._encoder._record_video
-            self.record_image = self._encoder._record_image
+            # self._encoder = GOTAgent(
+            #     config,
+            #     source_ob_space,
+            #     source_ac_space,
+            #     target_ob_space,
+            #     source_env_ob_space,
+            # )
+            # self.translate = self._encoder._translate
+            def __translate(obs, domain):
+                return obs
+            self.translate = __translate
+            # self.record_video = self._encoder._record_video
+            # self.record_image = self._encoder._record_image
 
         ### Initializing Action Transformation Model ###
         at_ob_space = join_spaces(encoded_ob_space, target_ac_space)
@@ -152,7 +155,7 @@ class IDAPTAgent(BaseMultiStageAgent):
             self._agent.store_episode(rollouts)
 
         elif "supervised" in stage:
-            self._encoder.store_episode(rollouts, env_type)
+            # self._encoder.store_episode(rollouts, env_type)
             if (
                 self._config.mode == "cross_visual_physics"
                 and env_type == "target"
@@ -257,17 +260,17 @@ class IDAPTAgent(BaseMultiStageAgent):
         ### Train Observation Model during Pretraining or Grounding Step ###
         if "supervised" in curr_stage:
             self._supervised_training_step += 1
-            encoder_train_info = self._encoder.train(
-                self._supervised_training_step, self._grounding_step
-            )
-            train_info.add(encoder_train_info)
+            # encoder_train_info = self._encoder.train(
+            #     self._supervised_training_step, self._grounding_step
+            # )
+            # train_info.add(encoder_train_info)
 
             if (
                 self._supervised_training_step
                 == self._config.max_stage_steps[curr_stage]
             ):
-                if not self._config.accumulate_data:
-                    self._encoder.clear_dataset()
+                # if not self._config.accumulate_data:
+                    # self._encoder.clear_dataset()
                 self._supervised_training_step = 0
                 if "visual" in self._config.mode:
                     ### reset parameters for next step
@@ -298,7 +301,7 @@ class IDAPTAgent(BaseMultiStageAgent):
                 if self._config.encoder_type == "cnn" and "visual" in self._config.mode:
                     self._agent.set_encoder_requires_grad(False)
                     self._agent.clear_buffer()
-                    self._encoder.requires_grad = False
+                    # self._encoder.requires_grad = False
 
             train_info["grounding_step"] = self._grounding_step
             AT_train_info = self._AT.train()
@@ -408,12 +411,18 @@ class IDAPTAgent(BaseMultiStageAgent):
     def sync_networks(self):
         self._agent.sync_networks()
         self._AT.sync_networks()
-        if "visual" in self._config.mode:
-            self._encoder.sync_networks()
+        # if "visual" in self._config.mode:
+            # self._encoder.sync_networks()
 
     def state_dict(self, stage=None):
+        if stage is None:
+            return {
+                # "encoder": self._encoder.state_dict(),
+                "agent_state_dict": self._agent.state_dict(),
+                "AT_state_dict": self._AT.state_dict(),
+            }
         if "supervised" in stage:
-            return {"encoder": self._encoder.state_dict()}
+            return {"encoder": {}}
         elif "training" in stage or "grounding" in stage:
             return {
                 "agent_state_dict": self._agent.state_dict(),
@@ -421,7 +430,7 @@ class IDAPTAgent(BaseMultiStageAgent):
             }
         else:
             return {
-                "encoder": self._encoder.state_dict(),
+                # "encoder": self._encoder.state_dict(),
                 "agent_state_dict": self._agent.state_dict(),
                 "AT_state_dict": self._AT.state_dict(),
             }
@@ -445,7 +454,7 @@ class IDAPTAgent(BaseMultiStageAgent):
 
         if "encoder" in ckpt.keys():
             try:
-                self._encoder.load_state_dict(ckpt["encoder"])
+                # self._encoder.load_state_dict(ckpt["encoder"])
                 print("Encoder loaded from ckpt.")
             except:
                 print("Encoder not loaded.")

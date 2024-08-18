@@ -4,6 +4,12 @@ from gym.envs.registration import register
 
 # Walker envs
 register(
+    id="GymWalker-v0",
+    entry_point="environments.gym_env:GymWalker",
+    max_episode_steps=1000,
+)
+
+register(
     id="GymWalkerBackwards-v0",
     entry_point="environments.gym_env:GymWalkerBackwards",
     max_episode_steps=1000,
@@ -24,6 +30,21 @@ register(
 register(
     id="GymWalkerDM-v0",
     entry_point="environments.gym_env:GymWalkerDM",
+    max_episode_steps=1000,
+)
+register(
+    id="GymWalkerDM-v1",
+    entry_point="environments.gym_env:GymWalkerDM1",
+    max_episode_steps=1000,
+)
+register(
+    id="GymWalkerDM-v2",
+    entry_point="environments.gym_env:GymWalkerDM2",
+    max_episode_steps=1000,
+)
+register(
+    id="GymWalkerDM-v3",
+    entry_point="environments.gym_env:GymWalkerDM3",
     max_episode_steps=1000,
 )
 
