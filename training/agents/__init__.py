@@ -17,7 +17,6 @@ MULTI_STAGE_ALGOS = {
 
 def get_multi_stage_agent_by_name(algo):
     if algo in MULTI_STAGE_ALGOS:
-        print("algo used: ", MULTI_STAGE_ALGOS[algo])
         return MULTI_STAGE_ALGOS[algo]
     else:
         print(MULTI_STAGE_ALGOS)

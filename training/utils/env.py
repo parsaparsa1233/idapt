@@ -503,11 +503,6 @@ def make_env(env, config, env_type):
     if env_type != "target":
         env_config.__dict__["unity"] = False
 
-    if env_type == "source":
-        env_config.__dict__["action_repeat"] = 2
-    elif env_type == "target":
-        env_config.__dict__["action_repeat"] = 1
-
     out = make_basic_env(env, env_config)
     if config.mod_env_params and env_type == "target":
         out = set_params(out, config)

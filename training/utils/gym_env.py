@@ -76,7 +76,7 @@ class GymWrapper(gym.Wrapper):
         self._camera_id = camera_id
         self._channels_first = channels_first
         self._frame_skip = frame_skip
-        self.max_episode_steps = self.env._max_episode_steps
+        self.max_episode_steps = self.env._max_episode_steps // frame_skip
         self._return_state = return_state
 
         if from_pixels:
@@ -88,7 +88,6 @@ class GymWrapper(gym.Wrapper):
             self.observation_space = env.observation_space
 
         self.env_observation_space = env.observation_space
-        print("Frame Skip: ", self._frame_skip, from_pixels)
 
     def reset(self):
         ob = self.env.reset()

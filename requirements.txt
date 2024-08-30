@@ -1,5 +1,6 @@
+numpy
 scipy
-# wandb
+wandb
 colorlog
 tqdm
 h5py
@@ -9,9 +10,12 @@ moviepy
 mpi4py
 gym
 mujoco-py
+torch
+torchvision
 absl-py
 gdown
 decorator==4.0.2
 numpy-quaternion
 transforms3d
 numba
+git+git://github.com/deepmind/dm_control.git
