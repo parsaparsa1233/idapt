@@ -3,7 +3,6 @@ Base code for Multi stage policy transfer training
 Collect rollouts from two environments and update policy networks
 """
 import copy
-import sys
 import gym
 import gzip
 import h5py
@@ -59,7 +58,6 @@ def check_memory_kill_switch(avail_thresh=1.0):
                 psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
                 < avail_thresh
             ):
-                print("exit happened")
                 exit(0)
     except FileNotFoundError:  # seems to happen infrequently
         pass
@@ -85,7 +83,6 @@ class MultiStageTrainer(object):
         # create source and target environment
         self._source_env = make_env(config.source_env, config, "source")
         self._target_env = make_env(config.target_env, config, "target")
-        print("*** skip frames", self._source_env.frame_skip, self._target_env.frame_skip)
         source_ob_space = self._source_env.observation_space
         source_env_ob_space = self._source_env.env_observation_space
         target_ob_space = target_env_ob_space = self._target_env.observation_space
@@ -193,7 +190,6 @@ class MultiStageTrainer(object):
                     dr_params = json.load(f)
                     wandb.config.update(dr_params[config.dr_params_set])
 
-
     def train(self):
         """ Trains an agent. """
         config = self._config
@@ -295,19 +291,6 @@ class MultiStageTrainer(object):
                     record_video=record_video,
                 )
                 self._log_test(curr_info["step"], info)
-
-                def deepgso(ob):
-                    size = sys.getsizeof(ob)
-                    if isinstance(ob, (list,tuple,set)):
-                        for element in ob:
-                            size+=deepgso(element)
-                    if isinstance(ob, dict):
-                        for k,v in ob.items():
-                            size+=deepgso(k)
-                            size+=deepgso(v)
-                    return size
-
-                print(deepgso(rollout))
 
             while (
                 runner
@@ -550,7 +533,6 @@ class MultiStageTrainer(object):
             )
 
             if record_video and i == 0:
-            # if False:
                 # source video
                 source_ep_rew = source_info[
                     "source_" + stage + "_" + str(self._agent._grounding_step) + "_rew"
