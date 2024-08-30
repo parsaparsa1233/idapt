@@ -58,9 +58,9 @@ def run(config):
     torch.manual_seed(config.seed)
     torch.cuda.manual_seed_all(config.seed)
 
-    if config.gpu is not None:
+    # if config.gpu is not None:
+    if torch.cuda.is_available():
         # os.environ["CUDA_VISIBLE_DEVICES"] = "{}".format(config.gpu)
-        assert torch.cuda.is_available()
         config.device = torch.device("cuda")
     else:
         config.device = torch.device("cpu")

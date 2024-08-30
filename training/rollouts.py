@@ -184,12 +184,13 @@ class RolloutRunner(object):
                 rollout.add(ac_info)
 
                 if record_qpos_qvel:
-                    rollout.add(
-                        {
-                            "qpos": env.sim.data.qpos.copy(),
-                            "qvel": env.sim.data.qvel.copy(),
-                        }
-                    )
+                    # rollout.add(
+                    #     {
+                    #         "qpos": env.sim.data.qpos.copy(),
+                    #         "qvel": env.sim.data.qvel.copy(),
+                    #     }
+                    # )
+                    pass
 
                 ob_next, reward, done, info = env.step(ac)
 
@@ -201,13 +202,14 @@ class RolloutRunner(object):
                 rollout.add({"ob_next": ob_next})
 
                 if record_qpos_qvel:
-                    rollout.add(
-                        {
-                            "qpos_next": env.sim.data.qpos.copy(),
-                            "qvel_next": env.sim.data.qvel.copy(),
-                        }
-                    )
-
+                    # rollout.add(
+                    #     {
+                    #         "qpos_next": env.sim.data.qpos.copy(),
+                    #         "qvel_next": env.sim.data.qvel.copy(),
+                    #     }
+                    # )
+                    pass
+                
                 # replace reward
                 if il:
                     if enc and not self._config.run_rl_from_state:
@@ -387,9 +389,10 @@ class RolloutRunner(object):
             rollout.add(ac_info)
 
             if record_qpos_qvel:
-                rollout.add(
-                    {"qpos": env.sim.data.qpos.copy(), "qvel": env.sim.data.qvel.copy()}
-                )
+                # rollout.add(
+                #     {"qpos": env.sim.data.qpos.copy(), "qvel": env.sim.data.qvel.copy()}
+                # )
+                pass
 
             ob_next, reward, done, info = env.step(ac)
 
@@ -400,12 +403,13 @@ class RolloutRunner(object):
             rollout.add({"ob_next": ob_next})
 
             if record_qpos_qvel:
-                rollout.add(
-                    {
-                        "qpos_next": env.sim.data.qpos.copy(),
-                        "qvel_next": env.sim.data.qvel.copy(),
-                    }
-                )
+                # rollout.add(
+                #     {
+                #         "qpos_next": env.sim.data.qpos.copy(),
+                #         "qvel_next": env.sim.data.qvel.copy(),
+                #     }
+                # )
+                pass
 
             # replace reward
             if il:
@@ -449,25 +453,25 @@ class RolloutRunner(object):
 
             reward_info.add(info)
 
-            if record_video:
-                frame_info = info.copy()
-                if "target_ac" in ac_info and config.source_env == "SawyerPush-v0":
-                    frame_info.update(
-                        {
-                            "x_at": ac["ac"][0] - ac_info["target_ac"]["ac"][0],
-                            "y_at": ac["ac"][1] - ac_info["target_ac"]["ac"][1],
-                        }
-                    )
-                frame_info.update({"action": ac["ac"]})
-                if il:
-                    frame_info.update(
-                        {
-                            "ep_rew_il": ep_rew_il,
-                            "rew_il": reward_il,
-                            "rew_rl": reward_rl,
-                        }
-                    )
-                self._store_frame(env, ep_len, ep_rew, frame_info)
+            # if record_video:
+            #     frame_info = info.copy()
+            #     if "target_ac" in ac_info and config.source_env == "SawyerPush-v0":
+            #         frame_info.update(
+            #             {
+            #                 "x_at": ac["ac"][0] - ac_info["target_ac"]["ac"][0],
+            #                 "y_at": ac["ac"][1] - ac_info["target_ac"]["ac"][1],
+            #             }
+            #         )
+            #     frame_info.update({"action": ac["ac"]})
+            #     if il:
+            #         frame_info.update(
+            #             {
+            #                 "ep_rew_il": ep_rew_il,
+            #                 "rew_il": reward_il,
+            #                 "rew_rl": reward_rl,
+            #             }
+            #         )
+            #     self._store_frame(env, ep_len, ep_rew, frame_info)
 
         # add last observation
         if "state" in ob.keys():

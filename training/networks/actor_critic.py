@@ -164,10 +164,12 @@ class Critic(nn.Module):
             self.fcs.append(MLP(config, input_dim, 1, config.critic_mlp_dim))
 
     def forward(self, ob, ac=None, detach_conv=False):
-        out = self.encoder(ob, detach_conv=detach_conv)
+        out_ = self.encoder(ob, detach_conv=detach_conv)
 
         if ac is not None:
-            out = torch.cat([out, flatten_ac(ac)], dim=-1)
+            out = torch.cat([out_, flatten_ac(ac)], dim=-1)
+        else:
+            out = out_
         assert len(out.shape) == 2
 
         out = [fc(out) for fc in self.fcs]

@@ -102,7 +102,8 @@ class IDAPTAgent(BaseMultiStageAgent):
         )
 
         if config.mode != "cross_visual":
-            self.evaluate_AT = self._evaluate_AT
+            # self.evaluate_AT = self._evaluate_AT
+            pass
 
         ### Initialize variables for tracking stage ###
         self._grounded = False
