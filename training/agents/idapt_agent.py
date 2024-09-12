@@ -98,8 +98,8 @@ class IDAPTAgent(BaseMultiStageAgent):
             at_env_ob_space,
         )
 
-        if config.mode != "cross_visual":
-            self.evaluate_AT = self._evaluate_AT
+        # if config.mode != "cross_visual":
+            # self.evaluate_AT = self._evaluate_AT
 
         ### Initialize variables for tracking stage ###
         self._grounded = False
@@ -412,6 +412,12 @@ class IDAPTAgent(BaseMultiStageAgent):
             self._encoder.sync_networks()
 
     def state_dict(self, stage=None):
+        if stage == None:
+            return {
+                "encoder": self._encoder.state_dict(),
+                "agent_state_dict": self._agent.state_dict(),
+                "AT_state_dict": self._AT.state_dict(),
+            }
         if "supervised" in stage:
             return {"encoder": self._encoder.state_dict()}
         elif "training" in stage or "grounding" in stage:

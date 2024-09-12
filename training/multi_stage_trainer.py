@@ -83,6 +83,7 @@ class MultiStageTrainer(object):
         # create source and target environment
         self._source_env = make_env(config.source_env, config, "source")
         self._target_env = make_env(config.target_env, config, "target")
+        print("*** skip frames", self._source_env.frame_skip, self._target_env.frame_skip)
         source_ob_space = self._source_env.observation_space
         source_env_ob_space = self._source_env.env_observation_space
         target_ob_space = target_env_ob_space = self._target_env.observation_space
@@ -355,7 +356,8 @@ class MultiStageTrainer(object):
 
                     train_info.add(_train_info)
 
-                    if "supervised" in stage and hasattr(self._agent, "record_image"):
+                    # if "supervised" in stage and hasattr(self._agent, "record_image"):
+                    if False:
                         self._agent.record_image(curr_info["step"], self._target_env)
 
                     if curr_info["update_iter"] % log_interval == 0:
@@ -597,7 +599,8 @@ class MultiStageTrainer(object):
                 )
 
             # gen video
-            if hasattr(self._agent, "record_video") and i == 0:
+            # if hasattr(self._agent, "record_video") and i == 0:
+            if False:
                 gen_frames = self._agent.record_video(
                     source_rollout["ob"],
                     domain="source",
